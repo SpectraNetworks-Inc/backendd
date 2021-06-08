@@ -13,6 +13,10 @@ const { authLimiter } = require('./middlewares/rateLimiter');
 const routes = require('./routes/v1');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
+const v3 = require('node-hue-api')
+  , discovery = v3.discovery
+  , hueApi = v3.api 
+;
 
 const app = express();
 
@@ -52,6 +56,32 @@ if (config.env === 'production') {
 
 // v1 api routes
 app.use('/v1', routes);
+
+
+
+//Download VPN Profile (has user auth)
+app.get('/vpn', function(req, res){
+  const file = `./static/vpn.ovpn`;
+  res.download(file);
+});
+
+
+
+
+
+
+
+//Idek why lol
+
+
+//waterpump data
+app.post('/wp', function (req, res, next) {
+  //TODO implement wp Data storage and response and triggers --------------------------------------------------
+      res.send('OK');
+  });
+
+
+
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
