@@ -23,6 +23,8 @@ const envVarsSchema = Joi.object()
     SMTP_USERNAME: Joi.string().description('username for email server'),
     SMTP_PASSWORD: Joi.string().description('password for email server'),
     EMAIL_FROM: Joi.string().description('the from field in the emails sent by the app'),
+    TWILIO_ACCOUNTSID: Joi.string().description('Twilio Account SID for sms'),
+    TWILIO_AUTHTOKEN: Joi.string().description('Twilio Auth Token for sms'),
   })
   .unknown();
 
@@ -60,5 +62,9 @@ module.exports = {
       },
     },
     from: envVars.EMAIL_FROM,
+  },
+  twilio: {
+    asid: envVars.TWILIO_ACCOUNTSID,
+    authtoken: envVars.TWILIO_AUTHTOKEN,
   },
 };
