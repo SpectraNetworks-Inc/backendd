@@ -27,52 +27,43 @@ const tempRedBdrm = async () => {
             if (state.on == true){
                 stateCache.set('light1', state, 500);
                 setTimeout(function(){
-                    const state = new LightState().on().brightness(50).xy(0.65,0.35).transitionFast();
+                    const state = new LightState().on().brightness(50).xy(0.75,0.27).transitionFast();
                     api.lights.setLightState(1, state);
-                    //Log
-                    console.log('Light 1 is Red');
                 }, 500);
                 setTimeout(function(){
                     const state = stateCache.get('light1');
                     api.lights.setLightState(1, state);
-                    //Log
-                    console.log('Reverted back to last state light1');
                 }, 5000);
                 setTimeout(function(){
                     stateCache.del('light1');
-                    //Log
-                    console.log('Deleted light1 state cache');
                 }, 6000);
             }
             else {
-                console.log('Light 1 was off skipping tempFunction');
+                console.log('Light 1 was off skipping function');
             }
         });
         api.lights.getLightState(3).then(state => {
             if (state.on == true){
                 stateCache.set('light3', state, 500);
                 setTimeout(function(){
-                    const state = new LightState().on().brightness(50).xy(0.65,0.35).transitionFast();
+                    const state = new LightState().on().brightness(50).xy(0.75,0.27).transitionFast();
                     api.lights.setLightState(3, state);
-                    console.log('Light 3 is Red');
                 }, 500);
                 setTimeout(function(){
                     const state = stateCache.get('light3');
                     api.lights.setLightState(3, state);
-                    console.log('Reverted back to last state light3');
                 }, 5000);
                 setTimeout(function(){
                     stateCache.del('light3');
-                    console.log('Deleted light3 state cache');
                 }, 6000);
             }
             else {
-                console.log('Light 3 was off skipping tempFunction');
+                console.log('Light 3 was off skipping function');
             }
         });
 
     }).then(() => {
-    console.log(`Light state change was successful?`);
+    console.log(`tempRedBdrm(f) Triggered`);
     });
 }
 
