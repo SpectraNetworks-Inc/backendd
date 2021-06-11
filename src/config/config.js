@@ -25,6 +25,9 @@ const envVarsSchema = Joi.object()
     EMAIL_FROM: Joi.string().description('the from field in the emails sent by the app'),
     TWILIO_ACCOUNTSID: Joi.string().description('Twilio Account SID for sms'),
     TWILIO_AUTHTOKEN: Joi.string().description('Twilio Auth Token for sms'),
+    FROMNUMBER: Joi.string().description("Twilio from number"),
+    ADMINNUMBER: Joi.string().description("Phone Number for emergency api contact"),
+    PHILIPSHUE_U: Joi.string().description("Philips Hue Username"),
   })
   .unknown();
 
@@ -66,5 +69,10 @@ module.exports = {
   twilio: {
     asid: envVars.TWILIO_ACCOUNTSID,
     authtoken: envVars.TWILIO_AUTHTOKEN,
+    from: envVars.FROMNUMBER,
+    adminNumber: envVars.ADMINNUMBER,
+  },
+  philipsHue: {
+    username: envVars.PHILIPSHUE_U,
   },
 };

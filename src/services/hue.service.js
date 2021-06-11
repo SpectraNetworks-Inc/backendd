@@ -2,12 +2,14 @@ const v3 = require('node-hue-api').v3;
 const LightState = v3.lightStates.LightState;
 const NodeCache = require( "node-cache" );
 const stateCache = new NodeCache();
+const config = require('../config/config');
+
 
 const getLightstateAndCache = async (lightID, stateKey) => {
     v3.discovery.nupnpSearch().then(searchResults => {
 
         const host = searchResults[0].ipaddress;
-        return v3.api.createLocal(host).connect('94zMO3H90hp1h2PknadE4U-ossCSC8MWDj-6Spht');
+        return v3.api.createLocal(host).connect(config.philipsHue.username);
     }).then(api => {
 
         return api.lights.getLightState(lightID);
@@ -21,7 +23,7 @@ const getLightstateAndCache = async (lightID, stateKey) => {
 const tempRedBdrm = async () => {
     v3.discovery.nupnpSearch().then(searchResults => {
         const host = searchResults[0].ipaddress;
-        return v3.api.createLocal(host).connect('94zMO3H90hp1h2PknadE4U-ossCSC8MWDj-6Spht');
+        return v3.api.createLocal(host).connect(config.philipsHue.username);
     }).then(api => {
         api.lights.getLightState(1).then(state => {
             if (state.on == true){
