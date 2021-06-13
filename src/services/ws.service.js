@@ -1,8 +1,6 @@
 const Logger = require('../config/logger');
 const WebSocket = require('ws');
-const ws_server = new WebSocket.Server({ port: 3001, path: '/ws' }, function(){
-    Logger.log('WS Server Started');
-});
+const ws_server = new WebSocket.Server({ port: 3001, path: '/ws' });
 
 ws_server.on('connection', function connection(ws, req) {
     const ip = req.socket.remoteAddress;

@@ -1,10 +1,19 @@
 const httpStatus = require('http-status');
+const LogRocket = require('logrocket');
+const config = require('../config/config');
 const catchAsync = require('../utils/catchAsync');
 const { authService, userService, tokenService, emailService } = require('../services');
+
+LogRocket.init(config.LogRocket_URI);
 
 const register = catchAsync(async (req, res) => {
   const user = await userService.createUser(req.body);
   const tokens = await tokenService.generateAuthTokens(user);
+  LogRocket.identify(user.id, {
+    name: user.name,
+    email: user.email,
+    role: user.role
+  });
   res.status(httpStatus.CREATED).send({ user, tokens });
 });
 

@@ -28,6 +28,7 @@ const envVarsSchema = Joi.object()
     FROMNUMBER: Joi.string().description("Twilio from number"),
     ADMINNUMBER: Joi.string().description("Phone Number for emergency api contact"),
     PHILIPSHUE_U: Joi.string().description("Philips Hue Username"),
+    LOGROCKETURI: Joi.string().description("LogRocket URI"),
   })
   .unknown();
 
@@ -75,4 +76,5 @@ module.exports = {
   philipsHue: {
     username: envVars.PHILIPSHUE_U,
   },
+  LogRocket_URI: envVars.LOGROCKETURI,
 };
