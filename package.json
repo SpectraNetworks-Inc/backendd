@@ -1,11 +1,11 @@
 {
-  "name": "create-nodejs-express-app",
-  "version": "1.7.0",
-  "description": "Create a Node.js app for building production-ready RESTful APIs using Express, by running one command",
+  "name": "backendd",
+  "version": "1.7.5",
+  "description": "An API for backend services",
   "bin": "bin/createNodejsApp.js",
   "main": "src/index.js",
-  "repository": "https://github.com/hagopj13/node-express-boilerplate.git",
-  "author": "Hagop Jamkojian <hagopj13@gmail.com>",
+  "repository": "https://github.com/Spectranetworks-inc/backendd.git",
+  "author": "Tyree Zacharopoulos <tyree@tyree.ca>",
   "license": "MIT",
   "engines": {
     "node": ">=12.0.0"
@@ -28,25 +28,7 @@
   },
   "keywords": [
     "node",
-    "node.js",
-    "boilerplate",
-    "generator",
-    "express",
-    "rest",
-    "api",
-    "mongodb",
-    "mongoose",
-    "es6",
-    "es7",
-    "es8",
-    "es9",
-    "jest",
-    "travis",
-    "docker",
-    "passport",
-    "joi",
-    "eslint",
-    "prettier"
+    "node.js"
   ],
   "dependencies": {
     "bcryptjs": "^2.4.3",

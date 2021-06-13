@@ -11,4 +11,6 @@ const sendSMStoAdmin = async (txtMsg) => {
   .then(message => console.log(`TXT_ID - ${message.sid}`));
 }
 
-module.exports = sendSMStoAdmin
+module.exports = {
+  sendSMStoAdmin
+};
