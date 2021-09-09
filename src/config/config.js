@@ -9,6 +9,11 @@ const envVarsSchema = Joi.object()
     NODE_ENV: Joi.string().valid('production', 'development', 'test').required(),
     PORT: Joi.number().default(3000),
     MONGODB_URL: Joi.string().required().description('Mongo DB url'),
+    COSMOS_USER: Joi.string().required().description('Azure CosmosDB Username'),
+    COSMOS_PASSWORD: Joi.string().required().description('Azure CosmosDB Password'),
+    COSMOS_DBNAME: Joi.string().required().description('Azure CosmosDB DBName'),
+    COSMOS_HOST: Joi.string().required().description('Azure CosmosDB Host'),
+    COSMOS_PORT: Joi.string().required().description('Azure CosmosDB Port'),
     JWT_SECRET: Joi.string().required().description('JWT secret key'),
     JWT_ACCESS_EXPIRATION_MINUTES: Joi.number().default(30).description('minutes after which access tokens expire'),
     JWT_REFRESH_EXPIRATION_DAYS: Joi.number().default(30).description('days after which refresh tokens expire'),
@@ -42,6 +47,11 @@ module.exports = {
   env: envVars.NODE_ENV,
   port: envVars.PORT,
   mongoose: {
+    cosmosUser: envVars.COSMOS_USER,
+    cosmosPassword: envVars.COSMOS_PASSWORD,
+    cosmosDB: envVars.COSMOS_DBNAME,
+    cosmosHost: envVars.COSMOS_HOST,
+    cosmosPort: envVars.COSMOS_PORT,
     url: envVars.MONGODB_URL + (envVars.NODE_ENV === 'test' ? '-test' : ''),
     options: {
       useCreateIndex: true,
