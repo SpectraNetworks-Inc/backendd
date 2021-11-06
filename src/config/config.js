@@ -34,12 +34,17 @@ const envVarsSchema = Joi.object()
     ADMINNUMBER: Joi.string().description("Phone Number for emergency api contact"),
     PHILIPSHUE_U: Joi.string().description("Philips Hue Username"),
     LOGROCKETURI: Joi.string().description("LogRocket URI"),
+    ESHOST: Joi.string().description("Elastic Search Host with Port"),
+    ESUSER: Joi.string().description("Elastic Search Username"),
+    ESPASS: Joi.string().description("Elastic Search Password"),
+    APMSERVER: Joi.string().description("APM Server with protocol and port"),
   })
   .unknown();
 
 const { value: envVars, error } = envVarsSchema.prefs({ errors: { label: 'key' } }).validate(process.env);
 
 if (error) {
+
   throw new Error(`Config validation error: ${error.message}`);
 }
 
@@ -87,4 +92,10 @@ module.exports = {
     username: envVars.PHILIPSHUE_U,
   },
   LogRocket_URI: envVars.LOGROCKETURI,
+  ElasticSearch: {
+    ESHOST: envVars.ESHOST,
+    ESUSER: envVars.ESUSER,
+    ESPASS: envVars.ESPASS,
+    APMSERVER: envVars.APMSERVER,
+  }
 };
