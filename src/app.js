@@ -14,7 +14,6 @@ const routes = require('./routes/v1');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
 const smsService = require('./services/sms.service');
-
 const app = express();
 
 if (config.env !== 'test') {
@@ -60,7 +59,6 @@ app.get('/vpn', function(req, res){
   const file = `./static/vpn.ovpn`;
   res.download(file);
 });
-
 
 
 // send back a 404 error for any unknown api request

@@ -1,5 +1,12 @@
 const winston = require('winston');
+const { ElasticsearchTransport } = require('winston-elasticsearch');
 const config = require('./config');
+
+const esTransportOpts = {
+  level: 'info',
+  clientOpts: { node: `http://${config.ElasticSearch.ESUSER}:${config.ElasticSearch.ESPASS}@${config.ElasticSearch.ESHOST}` }
+};
+const esTransport = new ElasticsearchTransport(esTransportOpts);
 
 const enumerateErrorFormat = winston.format((info) => {
   if (info instanceof Error) {
@@ -20,6 +27,7 @@ const logger = winston.createLogger({
     new winston.transports.Console({
       stderrLevels: ['error'],
     }),
+    esTransport,
   ],
 });
 
