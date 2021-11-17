@@ -56,7 +56,7 @@ if (config.env === 'production') {
 app.get('/env', async function(req, res){
   gitData.getLastCommit(function(err, commit) {
     if (err) {
-      if (config.env == 'development'){
+      if (config.env == 'review'){
         res.json({
           error: err
         });
