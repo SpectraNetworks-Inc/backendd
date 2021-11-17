@@ -55,15 +55,28 @@ if (config.env === 'production') {
 
 app.get('/env', async function(req, res){
   gitData.getLastCommit(function(err, commit) {
-    res.json({
-      env: `${config.env}`,
-      buildShortHash: commit.shortHash,
-      buildHash: commit.hash,
-      branch: commit.branch,
-      author: commit.author.name,
-      authorEmail: commit.author.email,
-      buildComments: commit.subject
-    });
+    if (err) {
+      if (config.env == 'development'){
+        res.json({
+          error: err
+        });
+      } else {
+        res.json({
+          error: 'Internal Server Error'
+        });
+      }
+    } else {
+      res.json({
+        env: `${config.env}`,
+        buildShortHash: commit.shortHash,
+        buildHash: commit.hash,
+        branch: commit.branch,
+        author: commit.author.name,
+        authorEmail: commit.author.email,
+        buildComments: commit.subject
+      });
+
+    }
   });
 });
 
