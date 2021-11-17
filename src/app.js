@@ -15,8 +15,11 @@ const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
 const smsService = require('./services/sms.service');
 const app = express();
+var gitData = require('git-last-commit');
 
-if (config.env !== 'test') {
+
+
+if (config.env !== 'review') {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);
 }
@@ -50,16 +53,22 @@ if (config.env === 'production') {
   app.use('/v1/auth', authLimiter);
 }
 
-// v1 api routes
-app.use('/v1', routes);
-
-
-//Download VPN Profile (has user auth)
-app.get('/vpn', function(req, res){
-  const file = `./static/vpn.ovpn`;
-  res.download(file);
+app.get('/env', async function(req, res){
+  gitData.getLastCommit(function(err, commit) {
+    res.json({
+      env: `${config.env}`,
+      buildShortHash: commit.shortHash,
+      buildHash: commit.hash,
+      branch: commit.branch,
+      author: commit.author.name,
+      authorEmail: commit.author.email,
+      buildComments: commit.subject
+    });
+  });
 });
 
+// v1 api routes
+app.use('/v1', routes);
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
