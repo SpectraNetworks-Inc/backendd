@@ -26,7 +26,7 @@ if (!config.Pushover.userToken || !config.Pushover.token){
       if (err) {
         throw err;
       }
-      Logger.info(`Sent Notification to [Device(s):${device}] | ${result} |`);
+      Logger.info(`Sent Notification to [Device(s):${device}] | ${result} | ${msg}`);
     });
   }
 }
