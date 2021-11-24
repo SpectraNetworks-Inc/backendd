@@ -19,7 +19,7 @@ if (!config.Pushover.userToken || !config.Pushover.token){
       title: "Backend Daemon Notification",
       sound: 'magic',
       device: device,
-      priority: 1, //Forced Regular notification for now
+      priority: -1, //Forced Regular notification for now
       timestamp: Date.now()
     };
     p.send(json, function (err, result) {

@@ -19,19 +19,6 @@ const logger = require('./config/logger');
 const Push = require('./services/pushover.service');
 //const Git = require('./utils/gitData');
 
-switch (config.env) {
-  case 'development':
-    Push.sendNotification('API Started [Development Branch]', config.Pushover.devices);
-    break;
-  case 'review':
-    Push.sendNotification('API Started [Review Branch]', config.Pushover.devices);
-    break;
-  case 'production':
-    Push.sendNotification('API Started [Production Branch]', config.Pushover.devices);
-    break;
-  default:
-    Push.sendNotification('API Started [No ENV]', config.Pushover.devices);
-  }
 
 if (config.env !== 'review') {
   app.use(morgan.successHandler);
@@ -92,5 +79,24 @@ app.use(errorConverter);
 
 // handle error
 app.use(errorHandler);
+
+
+if (!process.env.ENVIROMENT){
+  logger.info('No ENVIROMENT var set not sending notif');
+}else {
+  switch (process.env.ENVIROMENT) {
+    case 'dev':
+      Push.sendNotification('API Started [Development Branch]', config.Pushover.devices);
+      break;
+    case 'review':
+      Push.sendNotification('API Started [Review Branch]', config.Pushover.devices);
+      break;
+    case 'prod':
+      Push.sendNotification('API Started [Production Branch]', config.Pushover.devices);
+      break;
+    default:
+      Push.sendNotification('API Started [No ENV]', config.Pushover.devices);
+    }
+}
 
 module.exports = app;
