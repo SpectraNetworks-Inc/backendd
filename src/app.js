@@ -15,8 +15,12 @@ const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
 const smsService = require('./services/sms.service');
 const app = express();
+const logger = require('./config/logger');
+const Push = require('./services/pushover.service');
+//const Git = require('./utils/gitData');
 
-if (config.env !== 'test') {
+
+if (config.env !== 'review') {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);
 }
@@ -50,16 +54,20 @@ if (config.env === 'production') {
   app.use('/v1/auth', authLimiter);
 }
 
-// v1 api routes
-app.use('/v1', routes);
-
-
-//Download VPN Profile (has user auth)
-app.get('/vpn', function(req, res){
-  const file = `./static/vpn.ovpn`;
-  res.download(file);
+app.get('/env', async function(req, res){
+      if (config.env == 'review'){
+        res.json({
+          error: err
+        });
+      } else {
+        res.json({
+          error: 'Internal Server Error'
+        });
+      }
 });
 
+// v1 api routes
+app.use('/v1', routes);
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
@@ -71,5 +79,24 @@ app.use(errorConverter);
 
 // handle error
 app.use(errorHandler);
+
+
+if (!process.env.ENVIROMENT){
+  logger.info('No ENVIROMENT var set not sending notif');
+}else {
+  switch (process.env.ENVIROMENT) {
+    case 'dev':
+      Push.sendNotification('API Started [Development Branch]', config.Pushover.devices);
+      break;
+    case 'review':
+      Push.sendNotification('API Started [Review Branch]', config.Pushover.devices);
+      break;
+    case 'prod':
+      Push.sendNotification('API Started [Production Branch]', config.Pushover.devices);
+      break;
+    default:
+      Push.sendNotification('API Started [No ENV]', config.Pushover.devices);
+    }
+}
 
 module.exports = app;
