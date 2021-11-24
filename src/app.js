@@ -15,9 +15,23 @@ const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
 const smsService = require('./services/sms.service');
 const app = express();
-var gitData = require('git-last-commit');
+const logger = require('./config/logger');
+const Push = require('./services/pushover.service');
+//const Git = require('./utils/gitData');
 
-
+switch (config.env) {
+  case 'development':
+    Push.sendNotification('API Started [Development Branch]', config.Pushover.devices);
+    break;
+  case 'review':
+    Push.sendNotification('API Started [Review Branch]', config.Pushover.devices);
+    break;
+  case 'production':
+    Push.sendNotification('API Started [Production Branch]', config.Pushover.devices);
+    break;
+  default:
+    Push.sendNotification('API Started [No ENV]', config.Pushover.devices);
+  }
 
 if (config.env !== 'review') {
   app.use(morgan.successHandler);
@@ -54,8 +68,6 @@ if (config.env === 'production') {
 }
 
 app.get('/env', async function(req, res){
-  gitData.getLastCommit(function(err, commit) {
-    if (err) {
       if (config.env == 'review'){
         res.json({
           error: err
@@ -65,19 +77,6 @@ app.get('/env', async function(req, res){
           error: 'Internal Server Error'
         });
       }
-    } else {
-      res.json({
-        env: `${config.env}`,
-        buildShortHash: commit.shortHash,
-        buildHash: commit.hash,
-        branch: commit.branch,
-        author: commit.author.name,
-        authorEmail: commit.author.email,
-        buildComments: commit.subject
-      });
-
-    }
-  });
 });
 
 // v1 api routes

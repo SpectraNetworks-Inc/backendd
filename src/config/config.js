@@ -6,6 +6,7 @@ dotenv.config({ path: path.join(__dirname, '../../.env') });
 
 const envVarsSchema = Joi.object()
   .keys({
+    FQDN: Joi.string().description('Domain name for Email Verification Endpoint'),
     NODE_ENV: Joi.string().valid('production', 'development', 'review').required(),
     PORT: Joi.number().default(3000),
     MONGODB_URL: Joi.string().required().description('Mongo DB url'),
@@ -38,6 +39,9 @@ const envVarsSchema = Joi.object()
     ESUSER: Joi.string().description("Elastic Search Username"),
     ESPASS: Joi.string().description("Elastic Search Password"),
     APMSERVER: Joi.string().description("APM Server with protocol and port"),
+    PUSHOVERUSER: Joi.string().description("Pushover Notifications User Key"),
+    PUSHOVERTOKEN: Joi.string().description("Pushover Notifications Token"),
+    PUSHDEVICES: Joi.string().description("Pushover Notifications Devices")
   })
   .unknown();
 
@@ -49,6 +53,7 @@ if (error) {
 }
 
 module.exports = {
+  fqdn: envVars.FQDN,
   env: envVars.NODE_ENV,
   port: envVars.PORT,
   mongoose: {
@@ -97,5 +102,11 @@ module.exports = {
     ESUSER: envVars.ESUSER,
     ESPASS: envVars.ESPASS,
     APMSERVER: envVars.APMSERVER,
+  },
+  Pushover: {
+    userToken: envVars.PUSHOVERUSER,
+    token: envVars.PUSHOVERTOKEN,
+    devices: envVars.PUSHDEVICES,
   }
+
 };
