@@ -19,9 +19,9 @@ router
 
 //Create URL Endpoint
 router
-  .post('/shortUrls', async (req, res) => {
+  .post('/create', async (req, res) => {
     await ShortUrl.create({ full: req.body.fullUrl });
-    res.redirect('https://api.spectranetworks.ca/v1/shorturl/success');
+    res.redirect('/v1/shorturl/success');
 });
 
 //Get URL and redirect

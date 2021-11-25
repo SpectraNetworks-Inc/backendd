@@ -38,6 +38,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Render EJS
+app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 // sanitize request data
