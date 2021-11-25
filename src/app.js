@@ -10,14 +10,17 @@ const config = require('./config/config');
 const morgan = require('./config/morgan');
 const { jwtStrategy } = require('./config/passport');
 const { authLimiter } = require('./middlewares/rateLimiter');
-const routes = require('./routes/v1');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const ApiError = require('./utils/ApiError');
 const smsService = require('./services/sms.service');
 const app = express();
-const logger = require('./config/logger');
+const Logger = require('./config/logger');
 const Push = require('./services/pushover.service');
 //const Git = require('./utils/gitData');
+
+
+// Version routes
+const routesv1 = require('./routes/v1');
 
 
 if (config.env !== 'review') {
@@ -33,6 +36,9 @@ app.use(express.json());
 
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
+
+// Render EJS
+app.set('view engine', 'ejs');
 
 // sanitize request data
 app.use(xss());
@@ -67,7 +73,8 @@ app.get('/env', async function(req, res){
 });
 
 // v1 api routes
-app.use('/v1', routes);
+app.use('/v1', routesv1);
+
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
@@ -82,7 +89,7 @@ app.use(errorHandler);
 
 
 if (!process.env.ENVIROMENT){
-  logger.info('No ENVIROMENT var set not sending notif');
+  Logger.info('No ENVIROMENT var set not sending notif');
 }else {
   switch (process.env.ENVIROMENT) {
     case 'dev':

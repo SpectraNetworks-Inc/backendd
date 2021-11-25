@@ -1,9 +1,12 @@
 const express = require('express');
+const config = require('../../config/config');
+
+// Route Import
 const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const docsRoute = require('./docs.route');
 const iotRoute = require('./iot.route');
-const config = require('../../config/config');
+const shorturlRoute = require('./shorturl.route');
 
 const router = express.Router();
 
@@ -19,6 +22,10 @@ const defaultRoutes = [
   {
     path: '/iot',
     route: iotRoute,
+  },
+  {
+    path: '/shorturl',
+    route: shorturlRoute,
   },
 ];
 

@@ -3,7 +3,15 @@ const config = require('../../src/config/config');
 
 const setupTestDB = () => {
   beforeAll(async () => {
-    await mongoose.connect(config.mongoose.url, config.mongoose.options);
+    await mongoose.connect("mongodb://"+config.mongoose.cosmosHost+":"+config.mongoose.cosmosPort+"/"+config.mongoose.cosmosDB+"?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@tyree@", {
+      auth: {
+        user: config.mongoose.cosmosUser,
+        password: config.mongoose.cosmosPassword
+      },
+      useCreateIndex: true,
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
   });
 
   beforeEach(async () => {
