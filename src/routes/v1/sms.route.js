@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 
 router
-    .route('/ingestSMS')
+    .route('/ingestsms')
     .post(function (req, res, next) {
       res.json({
         yeet: true
@@ -15,3 +15,26 @@ router
     });
 
 module.exports = router;
+
+
+
+/**
+ * @swagger
+ * tags:
+ *   name: SMS
+ *   description: SMS Systtem
+ */
+
+/**
+ * @swagger
+ * /ingestsms:
+ *   post:
+ *     summary: Ingests SMS Data from twilio
+ *     description: Ingest Endpoint.
+ *     tags: [SMS]
+ *     responses:
+ *       "201":
+ *         description: Ingested
+ *
+ */
+
