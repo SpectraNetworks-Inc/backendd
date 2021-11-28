@@ -90,7 +90,8 @@ app.use(errorHandler);
 
 
 if (!process.env.ENVIROMENT){
-  Logger.info('No ENVIROMENT var set not sending notif');
+  Push.sendNotification(`API Started ENV:${config.env}`, 'myphone');
+
 }else {
   switch (process.env.ENVIROMENT) {
     case 'dev':

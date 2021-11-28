@@ -4,7 +4,8 @@ const logger = require('./config/logger');
 var apm = require('elastic-apm-node').start({
   serviceName: 'backendd',
   serverUrl: `${config.ElasticSearch.APMSERVER}`,
-  environment: `${config.env}`
+  environment: `${config.env}`,
+  active: config.env === 'production'
 });
 
 const mongoose = require('mongoose');

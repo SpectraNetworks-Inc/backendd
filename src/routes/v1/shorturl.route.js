@@ -1,10 +1,12 @@
 const express = require('express');
 const ShortUrl = require('../../models/shorturl.model');
+const auth = require('../../middlewares/auth');
 const router = express.Router();
 
 // Index ShortURL
 router
-  .get('/', async (req, res) => {
+  .route('/')
+  .get(auth('createShortURL'), async (req, res) => {
     const shortUrls = await ShortUrl.find();
     res.render('shorturl', { shortUrls: shortUrls });
   });
@@ -19,7 +21,8 @@ router
 
 //Create URL Endpoint
 router
-  .post('/create', async (req, res) => {
+  .route('/create')
+  .post(auth('createShortURL'), async (req, res) => {
     await ShortUrl.create({ full: req.body.fullUrl });
     res.redirect('/v1/shorturl/success');
 });
