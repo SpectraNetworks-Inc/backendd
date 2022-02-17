@@ -1,10 +1,9 @@
 {
   "name": "backendd",
-  "version": "1.7.5",
+  "version": "2.1.0",
   "description": "An API for backend services",
-  "bin": "bin/createNodejsApp.js",
   "main": "src/index.js",
-  "repository": "https://github.com/Spectranetworks-inc/backendd.git",
+  "repository": "https://git.tyree.ca/tyree/backendd.git",
   "author": "Tyree Zacharopoulos <tyree@tyree.ca>",
   "license": "MIT",
   "engines": {

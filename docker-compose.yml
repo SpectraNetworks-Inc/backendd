@@ -1,19 +1,17 @@
 version: '3'
 
 services:
-  node-app:
+  backendd:
     build: .
-    image: node-app
-    environment:
-      - MONGODB_URL=mongodb://mongodb:27017/node-boilerplate
+    image: backendd
     ports:
       - '3000:3000'
     depends_on:
       - mongodb
     volumes:
-      - .:/usr/src/node-app
+      - .:/usr/src/backendd
     networks:
-      - node-network
+      - backendd-network
 
   mongodb:
     image: mongo:4.2.1-bionic
@@ -22,11 +20,11 @@ services:
     volumes:
       - dbdata:/data/db
     networks:
-      - node-network
+      - backendd-network
 
 volumes:
   dbdata:
 
 networks:
-  node-network:
+  backendd-network:
     driver: bridge
