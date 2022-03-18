@@ -1,6 +1,7 @@
 const Logger = require('../../config/logger');
 const express = require('express');
 const VoiceResponse = require('twilio').twiml.VoiceResponse;
+const MessagingResponse = require("twilio").twiml.MessagingResponse;
 const router = express.Router();
 
 router
@@ -14,6 +15,15 @@ router
 
       res.type('text/xml');
       res.send(twiml.toString());
+    });
+
+router
+    .route('/inSMS')
+    .post(function (req, res, next) {
+      const twiml = new MessagingResponse();
+
+      twiml.message("Fuck you");
+      res.end(twiml.toString());
     });
 
 
