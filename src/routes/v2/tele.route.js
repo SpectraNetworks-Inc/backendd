@@ -9,7 +9,8 @@ router
       const twiml = new VoiceResponse();
       const city = req.body.FromCity;
 
-      twiml.say({ voice: 'alice' }, 'hello dude from ' + city);
+      twiml.say({ voice: 'alice' }, 'hey dude');
+      console.log(req.body);
 
       res.type('text/xml');
       res.send(twiml.toString());
