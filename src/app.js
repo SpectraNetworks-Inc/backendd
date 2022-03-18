@@ -21,7 +21,7 @@ const Push = require('./services/pushover.service');
 
 // Version routes
 const routesv1 = require('./routes/v1');
-const routesv2 = require('../routes/v2');
+const routesv2 = require('./routes/v2');
 
 
 if (config.env !== 'review') {
