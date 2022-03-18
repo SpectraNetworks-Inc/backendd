@@ -7,9 +7,9 @@ router
     .route('/inCALL')
     .post(function (req, res, next) {
       const twiml = new VoiceResponse();
-      const city = req.body.FromCity;
+      const province = req.body.FromState;
 
-      twiml.say({ voice: 'alice' }, 'hey dude');
+      twiml.say({ voice: 'alice' }, 'hey dude from' + province);
       console.log(req.body);
 
       res.type('text/xml');
