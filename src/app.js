@@ -21,6 +21,7 @@ const Push = require('./services/pushover.service');
 
 // Version routes
 const routesv1 = require('./routes/v1');
+const routesv2 = require('../routes/v2');
 
 
 if (config.env !== 'review') {
@@ -75,6 +76,7 @@ app.get('/env', async function(req, res){
 
 // v1 api routes
 app.use('/v1', routesv1);
+app.use('/v2', routesv2);
 
 
 // send back a 404 error for any unknown api request
