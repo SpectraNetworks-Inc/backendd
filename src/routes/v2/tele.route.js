@@ -8,9 +8,8 @@ router
     .route('/inCALL')
     .post(function (req, res, next) {
       const twiml = new VoiceResponse();
-      const province = req.body.FromState;
 
-      twiml.say({ voice: 'alice' }, 'hey dude from' + province);
+      twiml.play({ loop: 2 }, 'https://scisso.s3.us-west-2.amazonaws.com/static/heh.mp3');
       console.log(req.body);
 
       res.type('text/xml');
@@ -20,10 +19,8 @@ router
 router
     .route('/inSMS')
     .post(function (req, res, next) {
-      const twiml = new MessagingResponse();
-
-      twiml.message("Fuck you");
-      res.end(twiml.toString());
+      console.log(req.body);
+      res.setStatus(200);
     });
 
 
