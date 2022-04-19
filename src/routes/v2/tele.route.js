@@ -23,6 +23,13 @@ router
       res.setStatus(200);
     });
 
+router
+    .route('/changeMSG')
+    .post(function (req, res, next) {
+      console.log(req.body);
+      res.setStatus(200);
+    });
+
 
 
 module.exports = router;
