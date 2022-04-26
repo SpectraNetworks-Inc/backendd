@@ -1,9 +1,10 @@
-name: ci
+name: Push Docker Image
 
 on:
   push:
     branches:
       - 'dev'
+      - 'main'
 
 jobs:
   docker:
