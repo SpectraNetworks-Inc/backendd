@@ -62,7 +62,7 @@
     "pushover-notifications": "^1.2.2",
     "shortid": "^2.2.16",
     "swagger-jsdoc": "^6.0.8",
-    "swagger-ui-express": "^4.2.0",
+    "swagger-ui-express": "^4.3.0",
     "time-stamp": "^2.2.0",
     "twilio": "^3.76.1",
     "uuid": "^3.4.0",
