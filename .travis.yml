@@ -3,18 +3,17 @@ node_js:
   - '12'
 services:
   - mongodb
-cache: yarn
+cache: npm
 branches:
   only:
-    - master
+    - main
 env:
   global:
     - PORT=3000
-    - MONGODB_URL=mongodb://localhost:27017/node-boilerplate
+    - MONGODB_URL=mongodb://localhost:27017/backendd
     - JWT_SECRET=thisisasamplesecret
     - JWT_ACCESS_EXPIRATION_MINUTES=30
     - JWT_REFRESH_EXPIRATION_DAYS=30
 script:
-  - yarn lint
-  - yarn test
-after_success: yarn coverage:coveralls
+  - npm run lint
+  - npm run test

@@ -35,10 +35,6 @@ const envVarsSchema = Joi.object()
     ADMINNUMBER: Joi.string().description("Phone Number for emergency api contact"),
     PHILIPSHUE_U: Joi.string().description("Philips Hue Username"),
     LOGROCKETURI: Joi.string().description("LogRocket URI"),
-    ESHOST: Joi.string().description("Elastic Search Host with Port"),
-    ESUSER: Joi.string().description("Elastic Search Username"),
-    ESPASS: Joi.string().description("Elastic Search Password"),
-    APMSERVER: Joi.string().description("APM Server with protocol and port"),
     PUSHOVERUSER: Joi.string().description("Pushover Notifications User Key"),
     PUSHOVERTOKEN: Joi.string().description("Pushover Notifications Token"),
     PUSHDEVICES: Joi.string().description("Pushover Notifications Devices")
