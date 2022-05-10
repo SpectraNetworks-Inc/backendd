@@ -7,6 +7,7 @@ const userRoute = require('./user.route');
 const docsRoute = require('./docs.route');
 const iotRoute = require('./iot.route');
 const shorturlRoute = require('./shorturl.route');
+const smsRoute = require('./sms.route');
 
 const router = express.Router();
 
@@ -26,6 +27,10 @@ const defaultRoutes = [
   {
     path: '/shorturl',
     route: shorturlRoute,
+  },
+  {
+    path: '/tele',
+    route: smsRoute,
   },
 ];
 

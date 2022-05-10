@@ -7,11 +7,8 @@ const router = express.Router();
 router
     .route('/ingestsms')
     .post(function (req, res, next) {
-      res.json({
-        yeet: true
-      });
-        Logger.debug(req.body);
-
+      Logger.log(req.body);
+      res.send('OK');
     });
 
 module.exports = router;
