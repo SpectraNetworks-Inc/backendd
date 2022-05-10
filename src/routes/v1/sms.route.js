@@ -7,7 +7,7 @@ const router = express.Router();
 router
     .route('/ingestsms')
     .post(function (req, res, next) {
-      Logger.log(req.body);
+      Logger.info(req.body);
       res.send('OK');
     });
 
