@@ -4,36 +4,99 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <script src="https://unpkg.com/@tabler/core@1.0.0-beta10/dist/js/tabler.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@tabler/core@1.0.0-beta10/dist/css/tabler.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/@tabler/icons@latest/iconfont/tabler-icons.min.css">
+  
   <title>ShortURL</title>
 </head>
-<body>
-  <div class="container">
-    <h1>Primitive Link Shortener</h1>
-    <form action="/v1/shorturl/create" method="POST" class="my-4 form-inline">
-      <label for="fullUrl" class="sr-only">Url</label>
-      <input required placeholder="Url" type="url" name="fullUrl" id="fullUrl" class="form-control col mr-2">
-      <button class="btn btn-success" type="submit">Shrink</button>
-    </form>
+<body class="theme-dark">
+  <div class="page">
+    <header class="navbar navbar-expand-md navbar-light d-print-none">
+      <div class="container-xl">
+        <h1>Link Shortener</h1>
+      </div>
+    </header>
+    <div class="page-wrapper"">
 
-    <table class="table table-striped table-responsive">
-      <thead>
-        <tr>
-          <th>Full URL</th>
-          <th>Short URL</th>
-          <th>Clicks</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% shortUrls.forEach(shortUrl => { %>
-          <tr>
-            <td><a href="<%= shortUrl.full %>"><%= shortUrl.full %></a></td>
-            <td><a href="/v1/shorturl/<%= shortUrl.short %>"><%= shortUrl.short %></a></td>
-            <td><%= shortUrl.clicks %></td>
-          </tr>
-        <% }) %>
-      </tbody>
-    </table>
+      <div class="container-xl">
+        <div class="page-header d-print-none">
+          <div class="row g-2 align-items-center">
+            <div class="col">
+              <div class="page-title">
+                <h2></h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-body">
+      <div class="container-xl">
+        <div class="row row-cards">
+          <div class="col-12">
+            <form class="card" action="/v1/shorturl/create" method="POST">
+              <div class="card-header">
+                <h3 class="card-title">ShortURL</h3>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-xl-4">
+                    <div class="row">
+                      <div class="col-md-6 col-xl-12">
+                        <div class="mb-3">
+                          <label for="fullUrl" class="form-label">URL</label>
+                          <input required placeholder="https://slynk.ca/example" type="url" name="fullUrl" id="fullUrl" class="form-control mb-3">
+                          <button class="btn btn-success" type="submit">Shrink</button>
+                        </div>
+
+                        <!-- Table -->
+                        <div class="table-responsive">
+                          <table class="table table-vcenter">
+                            <thead>
+                              <tr>
+                                <th>Full URL</th>
+                                <th>Short URL</th>
+                                <th>Clicks</th>
+                                <th class="w-1"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <% shortUrls.forEach(shortUrl => { %>
+                                <tr>
+                                  <td><a href="<%= shortUrl.full %>"><%= shortUrl.full %></a></td>
+                                  <td class="text-muted"><a href="/v1/shorturl/<%= shortUrl.short %>"><%= shortUrl.short %></a></td>
+                                  <td class="text-muted"><%= shortUrl.clicks %></td>
+                                  <td>
+                                    <button class="btn btn-icon btn-danger" type="sumbit">
+                                      <a href="/v1/shorturl/<%= shortUrl.short %>/delete" style="text-decoration:none">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-trash-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round" style="color: #000;">
+                                          <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                          <path d="M4 7h16"></path>
+                                          <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                          <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                          <path d="M10 12l4 4m0 -4l-4 4"></path>
+                                       </svg>
+                                      </a>
+                                    </button>
+                                  </td>
+                                </tr>
+                                <% }) %>
+                              </tbody>
+                            </table>
+                          </div>
+                          <!-- Table end -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 </html>

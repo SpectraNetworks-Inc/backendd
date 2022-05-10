@@ -9,19 +9,12 @@ router
     res.render('shorturl', { shortUrls: shortUrls });
   });
 
-// Success Endpoint
-router
-  .get('/success', async (req, res) => {
-    res.json({
-      success: true
-    });
-  });
 
 //Create URL Endpoint
 router
   .post('/create', async (req, res) => {
-    await ShortUrl.create({ full: req.body.fullUrl });
-    res.redirect('/v1/shorturl/success');
+    await ShortUrl.create({ full: req.body.fullUrl, createdByIP: req.headers['x-real-ip']});
+    res.redirect('/v1/shorturl');
 });
 
 //Get URL and redirect
@@ -33,5 +26,14 @@ router
     shortUrl.save();
     res.redirect(shortUrl.full);
 });
+
+router
+  .get('/:shortUrl/delete', async (req, res) => {
+    const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl });
+    if (shortUrl == null) return res.sendStatus(404);
+    shortUrl.deleteOne({ short: req.params.shortUrl });
+    res.redirect('/v1/shorturl');
+});
+
 
 module.exports = router;
