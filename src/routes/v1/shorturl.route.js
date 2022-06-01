@@ -15,7 +15,7 @@ router
   .post('/create', async (req, res) => {
     await ShortUrl.create({ full: req.body.full });
   if (!req.body.full) { 
-    res.json("invalid);
+    res.json("invalid");
              } else {
     res.redirect('/v1/shorturl');
   }
