@@ -13,8 +13,12 @@ router
 //Create URL Endpoint
 router
   .post('/create', async (req, res) => {
-    await ShortUrl.create({ full: req.body.fullUrl });
+    await ShortUrl.create({ full: req.body.full });
+  if (!req.body.full) { 
+    res.json("invalid);
+             } else {
     res.redirect('/v1/shorturl');
+  }
 });
 
 //Get URL and redirect
