@@ -13,7 +13,7 @@ router
 //Create URL Endpoint
 router
   .post('/create', async (req, res) => {
-    await ShortUrl.create({ full: req.body.fullUrl, createdByIP: req.headers['x-real-ip']});
+    await ShortUrl.create({ full: req.body.fullUrl });
     res.redirect('/v1/shorturl');
 });
 
