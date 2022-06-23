@@ -37,7 +37,7 @@ app.use(helmet());
 app.use(
   permissionsPolicy({
     features: {
-      publickeyCredentials: ["*.spectranetworks.ca"]
+      publickeyCredentials: ['"*.spectranetworks.ca"'],
     },
   })
 );
