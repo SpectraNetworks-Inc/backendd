@@ -20,7 +20,7 @@ module.exports = router;
  * @swagger
  * tags:
  *   name: SMS
- *   description: SMS Systtem
+ *   description: SMS System
  */
 
 /**

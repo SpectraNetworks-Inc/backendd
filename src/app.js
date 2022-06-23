@@ -1,5 +1,6 @@
 const express = require('express');
 const helmet = require('helmet');
+const permissionsPolicy = require("permissions-policy");
 const xss = require('xss-clean');
 const mongoSanitize = require('express-mongo-sanitize');
 const compression = require('compression');
@@ -31,6 +32,15 @@ if (config.env !== 'review') {
 
 // set security HTTP headers
 app.use(helmet());
+
+
+app.use(
+  permissionsPolicy({
+    features: {
+      publickeyCredentials: ["*.spectranetworks.ca"]
+    },
+  })
+);
 
 // parse json request body
 app.use(express.json());
