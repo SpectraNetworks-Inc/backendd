@@ -1,31 +1,37 @@
 
 const config = require('./config/config');
 const logger = require('./config/logger');
-
-const mongoose = require('mongoose');
+const SQL = require('./utils/SQL.js');
 const app = require('./app');
-//const log = require('./services/elasticsearch.service');
 
 
+
+//New DB connection
 let server;
-mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
-  logger.info('Connected to Mongodb');
+SQL.authenticate().then((res) => {
+  logger.info('SQL Connection Successful and Authenticated');
   server = app.listen(config.port, () => {
     logger.info(`Listening to port ${config.port}`);
   });
-});
-
+}).catch((err) => {
+  logger.error('SQL Connection Failed, Closing Server');
+  logger.error(err);
+})
 
 
 const exitHandler = () => {
-  if (server) {
-    server.close(() => {
-      logger.info('Server closed');
-      process.exit(1);
-    });
-  } else {
+  //Close DB Connection
+  SQL.close(() => {
+    logger.info('SQL Connection closed');
+  }).catch((err) => {
+    logger.error('SQL Connection close failed');
+    logger.error(err);
+  });
+  //Exit
+  setTimeout(() => {
+    logger.info('Exiting');
     process.exit(1);
-  }
+  }, 4000);
 };
 
 const unexpectedErrorHandler = (error) => {
@@ -38,7 +44,15 @@ process.on('unhandledRejection', unexpectedErrorHandler);
 
 process.on('SIGTERM', () => {
   logger.info('SIGTERM received');
-  if (server) {
-    server.close();
-  }
+  exitHandler();
 });
+
+process.on('SIGINT', function() {
+  logger.info('SIGINT received');
+  exitHandler();
+});
+
+
+module.exports = {
+  exitHandler
+}

@@ -1,25 +1,27 @@
-const mongoose = require('mongoose');
 const { nanoid }  = require('nanoid');
+const { DataTypes } = require('sequelize');
+const SQL = require('../utils/SQL.js');
+const uuid = require('uuid/v4');
 
-const shortUrlSchema = new mongoose.Schema({
+const ShortURL = SQL.define('ShortUrl', {
   full: {
-    type: String,
-    required: true
+    type: DataTypes.STRING,
+    allowNull: false
   },
   short: {
-    type: String,
-    required: true,
-    default: () => nanoid(6)
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: () => nanoid(6)
   },
   clicks: {
-    type: Number,
-    required: true,
-    default: 0
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    defaultValue: 0
   },
   createdByIP: {
-    type: String,
+    type: DataTypes.STRING,
   }
-
 });
+ShortURL.sync();
 
-module.exports = mongoose.model('ShortUrl', shortUrlSchema);
+module.exports = ShortURL;

@@ -1,43 +1,33 @@
+
+
 const express = require('express');
-const ShortUrl = require('../../models/shorturl.model');
 const router = express.Router();
+const auth = require('../../middlewares/auth');
+const validate = require('../../middlewares/validate');
+const shorturlValidation = require('../../validations/shorturl.validation');
+const shorturlController = require('../../controllers/shorturl.controller');
 
-// Index ShortURL
-router
-  .get('/', async (req, res) => {
-    const shortUrls = await ShortUrl.find();
-    res.render('shorturl', { shortUrls: shortUrls });
-  });
-
-
-//Create URL Endpoint
-router
-  .post('/create', async (req, res) => {
-    await ShortUrl.create({ full: req.body.full });
-  if (!req.body.full) { 
-    res.json("invalid");
-             } else {
-    res.redirect('/v1/shorturl');
-  }
-});
-
-//Get URL and redirect
-router
-  .get('/:shortUrl', async (req, res) => {
-    const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl });
-    if (shortUrl == null) return res.sendStatus(404);
-    shortUrl.clicks++;
-    shortUrl.save();
-    res.redirect(shortUrl.full);
-});
 
 router
-  .get('/:shortUrl/delete', async (req, res) => {
-    const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl });
-    if (shortUrl == null) return res.sendStatus(404);
-    shortUrl.deleteOne({ short: req.params.shortUrl });
-    res.redirect('/v1/shorturl');
-});
+  .route('/')
+  .get(shorturlController.getAllUrls);
+
+router
+  .route('/:shortUrl')
+  .get(shorturlController.getUrl);
+
+router
+  .route('/create')
+  .post(validate(shorturlValidation.createShortUrl), shorturlController.createUrl);
+
+router
+  .route('/:shortUrl/delete')
+  .post(shorturlController.deleteUrl);
+
+  router
+  .route('/:shortUrl/stats')
+  .get(shorturlController.urlStats);
+
 
 
 module.exports = router;

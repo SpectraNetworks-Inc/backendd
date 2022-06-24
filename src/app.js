@@ -32,8 +32,6 @@ if (config.env !== 'review') {
 
 // set security HTTP headers
 app.use(helmet());
-
-
 app.use(
   permissionsPolicy({
     features: {
@@ -69,7 +67,8 @@ passport.use('jwt', jwtStrategy);
 
 // limit repeated failed requests to auth endpoints
 if (config.env === 'production') {
-  app.use('/v1/auth', authLimiter);
+  app.use('/v1', authLimiter);
+  app.use('/v2', authLimiter);
 }
 
 // v1 api routes
@@ -88,23 +87,5 @@ app.use(errorConverter);
 // handle error
 app.use(errorHandler);
 
-
-if (!process.env.ENVIROMENT){
-  Logger.info('No ENVIROMENT var set not sending notif');
-}else {
-  switch (process.env.ENVIROMENT) {
-    case 'dev':
-      Push.sendNotification('API Started [Development Branch]', config.Pushover.devices);
-      break;
-    case 'review':
-      Push.sendNotification('API Started [Review Branch]', config.Pushover.devices);
-      break;
-    case 'prod':
-      Push.sendNotification('API Started [Production Branch]', config.Pushover.devices);
-      break;
-    default:
-      Push.sendNotification('API Started [No ENV]', config.Pushover.devices);
-    }
-}
 
 module.exports = app;

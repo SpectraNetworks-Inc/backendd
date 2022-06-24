@@ -1,44 +1,25 @@
-const mongoose = require('mongoose');
-const { toJSON } = require('./plugins');
-const { tokenTypes } = require('../config/tokens');
+const { DataTypes } = require('sequelize');
+const SQL = require('../utils/SQL.js');
 
-const tokenSchema = mongoose.Schema(
-  {
+const Token = SQL.define('Token', {
     token: {
-      type: String,
-      required: true,
-      index: true,
+      type: DataTypes.STRING,
     },
     user: {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: 'User',
-      required: true,
+      type: DataTypes.INTEGER,
     },
     type: {
-      type: String,
-      enum: [tokenTypes.REFRESH, tokenTypes.RESET_PASSWORD, tokenTypes.VERIFY_EMAIL],
-      required: true,
+      type: DataTypes.STRING,
     },
     expires: {
-      type: Date,
-      required: true,
+      type: DataTypes.DATE,
     },
     blacklisted: {
-      type: Boolean,
-      default: false,
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
-  },
-  {
-    timestamps: true,
   }
 );
-
-// add plugin that converts mongoose to json
-tokenSchema.plugin(toJSON);
-
-/**
- * @typedef Token
- */
-const Token = mongoose.model('Token', tokenSchema);
+Token.sync();
 
 module.exports = Token;
