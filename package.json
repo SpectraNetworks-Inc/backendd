@@ -54,7 +54,7 @@
     "node-cache": "^5.1.2",
     "node-hue-api": "^5.0.0-beta.2",
     "nodemailer": "^6.7.5",
-    "passport": "^0.5.2",
+    "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "path": "^0.12.7",
     "permissions-policy": "^0.6.0",
