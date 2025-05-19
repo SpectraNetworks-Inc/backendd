@@ -87,6 +87,6 @@
     "node-mocks-http": "^1.8.0",
     "nodemon": "^2.0.17",
     "prettier": "^2.6.2",
-    "supertest": "^6.2.2"
+    "supertest": "^7.1.1"
   }
 }
